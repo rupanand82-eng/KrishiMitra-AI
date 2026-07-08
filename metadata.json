@@ -1,0 +1,6 @@
+{
+  "name": "KrishiMitra AI",
+  "description": "Voice & SMS Agricultural Intelligence Platform using Gemini AI, Firestore database, weather intelligence, and crop diagnosis.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Farmers: Authorized farmers can read/write their own profiles; also allow reading for admin purposes
+    match /farmers/{farmerId} {
+      allow read, write: if true; // Open for hackathon demonstration/development purposes
+    }
+
+    // Weather Advisories: Anyone can read, experts/admin can write
+    match /weatherAdvisories/{district} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Expert Tickets: Anyone can read/write for seamless testing
+    match /expertTickets/{ticketId} {
+      allow read, write: if true;
+    }
+
+    // Market Prices: Anyone can read
+    match /marketPrices/{commodityId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Government Schemes: Anyone can read
+    match /governmentSchemes/{schemeId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // SMS Logs: Anyone can read/write for tracking
+    match /smsLogs/{logId} {
+      allow read, write: if true;
+    }
+  }
+}

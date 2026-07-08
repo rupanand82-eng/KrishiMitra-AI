@@ -1,0 +1,128 @@
+{
+  "entities": {
+    "Farmer": {
+      "title": "Farmer Profile",
+      "description": "Information about a registered farmer, including location and soil type",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID of the farmer" },
+        "name": { "type": "string", "description": "Full name of the farmer" },
+        "mobile": { "type": "string", "description": "Mobile number used for login" },
+        "aadhaar": { "type": "string", "description": "Optional Aadhaar number" },
+        "language": { "type": "string", "description": "Preferred language for communication (e.g., telugu, hindi, tamil, kannada, marathi, english)" },
+        "district": { "type": "string", "description": "District of the farm" },
+        "village": { "type": "string", "description": "Village of the farm" },
+        "farmSize": { "type": "number", "description": "Farm size in acres" },
+        "soilType": { "type": "string", "description": "Type of soil (e.g., Red, Black, Clayey, Sandy, Loamy)" },
+        "soilPh": { "type": "number", "description": "Soil pH level" },
+        "nitrogen": { "type": "number", "description": "Nitrogen content in mg/kg" },
+        "phosphorus": { "type": "number", "description": "Phosphorus content in mg/kg" },
+        "potassium": { "type": "number", "description": "Potassium content in mg/kg" },
+        "groundwaterDepth": { "type": "number", "description": "Groundwater table depth in meters" },
+        "irrigationAvailable": { "type": "boolean", "description": "Is irrigation facility available?" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["name", "mobile", "language", "district", "village"]
+    },
+    "WeatherAdvisory": {
+      "title": "Weather Advisory",
+      "description": "Cached weather forecast and AI advisor outputs",
+      "type": "object",
+      "properties": {
+        "district": { "type": "string" },
+        "village": { "type": "string" },
+        "temperature": { "type": "number" },
+        "humidity": { "type": "number" },
+        "windSpeed": { "type": "number" },
+        "rainProbability": { "type": "number" },
+        "uvIndex": { "type": "number" },
+        "alerts": { "type": "array" },
+        "aiIrrigationAdvice": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ExpertTicket": {
+      "title": "Expert Consultation Ticket",
+      "description": "A ticket raised by a farmer for agricultural experts to answer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "farmerId": { "type": "string" },
+        "farmerName": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string", "description": "Optional leaf or plant image URL" },
+        "voiceUrl": { "type": "string", "description": "Optional voice note audio URL" },
+        "status": { "type": "string", "enum": ["Open", "In Progress", "Resolved"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "replies": { "type": "array", "description": "Expert and farmer messages on the ticket" }
+      }
+    },
+    "MarketPrice": {
+      "title": "Market Commodity Price",
+      "description": "Current prices, MSP, and demand trends for agricultural crops",
+      "type": "object",
+      "properties": {
+        "commodity": { "type": "string" },
+        "market": { "type": "string" },
+        "currentPrice": { "type": "number", "description": "Price per quintal in INR" },
+        "msp": { "type": "number", "description": "Minimum Support Price in INR" },
+        "demandTrend": { "type": "string", "enum": ["High", "Medium", "Low"] },
+        "priceForecast": { "type": "array" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "GovernmentScheme": {
+      "title": "Government Scheme",
+      "description": "Agricultural schemes, loans, and subsidies available for farmers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "eligibility": { "type": "string" },
+        "benefits": { "type": "string" },
+        "link": { "type": "string" },
+        "category": { "type": "string" }
+      }
+    },
+    "SMSLog": {
+      "title": "SMS Advisory Log",
+      "description": "Log of automated SMS alerts sent to farmers",
+      "type": "object",
+      "properties": {
+        "farmerId": { "type": "string" },
+        "mobile": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["Rain Alert", "Pest Alert", "Fertilizer Reminder", "Harvest Advisory"] },
+        "sentAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/farmers/{farmerId}": {
+      "schema": { "$ref": "#/entities/Farmer" },
+      "description": "Collection of farmer profiles indexed by their Auth UID"
+    },
+    "/weatherAdvisories/{district}": {
+      "schema": { "$ref": "#/entities/WeatherAdvisory" },
+      "description": "Location-based weather advice and notifications"
+    },
+    "/expertTickets/{ticketId}": {
+      "schema": { "$ref": "#/entities/ExpertTicket" },
+      "description": "Tickets for consults with Rythu Seva Kendras"
+    },
+    "/marketPrices/{commodityId}": {
+      "schema": { "$ref": "#/entities/MarketPrice" },
+      "description": "Real-time crop prices and trends"
+    },
+    "/governmentSchemes/{schemeId}": {
+      "schema": { "$ref": "#/entities/GovernmentScheme" },
+      "description": "National and state schemes information"
+    },
+    "/smsLogs/{logId}": {
+      "schema": { "$ref": "#/entities/SMSLog" },
+      "description": "Records of SMS advisory messages sent"
+    }
+  }
+}
