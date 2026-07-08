@@ -1,6 +1,7 @@
 # KrishiMitra AI (कृषिमित्र) 🌾
 
 **KrishiMitra AI** is a premium, localized, full-stack Agricultural Intelligence and Decision-Support Platform built specifically for smallholder farmers. The system leverages state-of-the-art Generative AI, cloud databases, and satellite remote-sensing visualizations to empower farmers with data-driven decision-making tools.
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/67fcbae8-afbf-4d84-9434-47149353e821" />
 
 ---
 
